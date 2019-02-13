@@ -314,33 +314,8 @@ exports[`Account rendering renders! 1`] = `
                               className="permissions-widget--section-list"
                             >
                               <PermissionsWidgetItem
-                                id="orgs-read-*-*"
+                                id="orgs-write-orgs-orgs"
                                 key=".$0"
-                                label="read"
-                                mode="read"
-                                selected="unselected"
-                              >
-                                <li
-                                  className="permissions-widget--item unselected"
-                                  onClick={[Function]}
-                                >
-                                  <div
-                                    className="permissions-widget--icon"
-                                  >
-                                    <span
-                                      className="icon remove"
-                                    />
-                                  </div>
-                                  <label
-                                    className="permissions-widget--item-label"
-                                  >
-                                    read
-                                  </label>
-                                </li>
-                              </PermissionsWidgetItem>
-                              <PermissionsWidgetItem
-                                id="orgs-write-*-*"
-                                key=".$1"
                                 label="write"
                                 mode="read"
                                 selected="selected"
@@ -388,33 +363,8 @@ exports[`Account rendering renders! 1`] = `
                               className="permissions-widget--section-list"
                             >
                               <PermissionsWidgetItem
-                                id="buckets-read-*-*"
+                                id="buckets-write-buckets-buckets"
                                 key=".$0"
-                                label="read"
-                                mode="read"
-                                selected="unselected"
-                              >
-                                <li
-                                  className="permissions-widget--item unselected"
-                                  onClick={[Function]}
-                                >
-                                  <div
-                                    className="permissions-widget--icon"
-                                  >
-                                    <span
-                                      className="icon remove"
-                                    />
-                                  </div>
-                                  <label
-                                    className="permissions-widget--item-label"
-                                  >
-                                    read
-                                  </label>
-                                </li>
-                              </PermissionsWidgetItem>
-                              <PermissionsWidgetItem
-                                id="buckets-write-*-*"
-                                key=".$1"
                                 label="write"
                                 mode="read"
                                 selected="selected"

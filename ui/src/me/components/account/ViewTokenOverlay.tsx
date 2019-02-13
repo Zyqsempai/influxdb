@@ -15,20 +15,25 @@ import {Authorization, Permission} from '@influxdata/influx'
 // Actions
 import {NotificationAction} from 'src/types'
 
-const {Write, Read} = Permission.ActionEnum
-
 interface Props {
   onNotify: NotificationAction
   auth: Authorization
   onDismissOverlay: () => void
 }
 
-const actions = [Read, Write]
-
 export default class ViewTokenOverlay extends PureComponent<Props> {
   public render() {
     const {description, permissions} = this.props.auth
     const {onNotify} = this.props
+
+    const obj = {}
+    for (const key of permissions) {
+      if (obj[key.resource.type]) {
+        obj[key.resource.type].push(key.action)
+      } else {
+        obj[key.resource.type] = [key.action]
+      }
+    }
 
     return (
       <OverlayContainer>
@@ -39,20 +44,20 @@ export default class ViewTokenOverlay extends PureComponent<Props> {
             mode={PermissionsWidgetMode.Read}
             heightPixels={500}
           >
-            {permissions.map((p, i) => {
+            {Object.keys(obj).map((p, i) => {
               return (
                 <PermissionsWidget.Section
                   key={i}
-                  id={this.id(p)}
+                  id={p}
                   title={this.title(p)}
                   mode={PermissionsWidgetMode.Read}
                 >
-                  {actions.map((a, i) => (
+                  {obj[p].map((a, i) => (
                     <PermissionsWidget.Item
                       key={i}
                       id={this.itemID(p, a)}
                       label={a}
-                      selected={this.selected(p, a)}
+                      selected={PermissionsWidgetSelection.Selected}
                     />
                   ))}
                 </PermissionsWidget.Section>
@@ -64,39 +69,15 @@ export default class ViewTokenOverlay extends PureComponent<Props> {
     )
   }
 
-  private selected = (
-    permission: Permission,
-    action: Permission.ActionEnum
-  ): PermissionsWidgetSelection => {
-    if (permission.action === action) {
-      return PermissionsWidgetSelection.Selected
-    }
-
-    return PermissionsWidgetSelection.Unselected
-  }
-
   private itemID = (
-    permission: Permission,
+    permission: string,
     action: Permission.ActionEnum
   ): string => {
-    return `${permission.resource.type}-${action}-${permission.resource.id ||
-      '*'}-${permission.resource.orgID || '*'}`
+    return `${permission}-${action}-${permission || '*'}-${permission || '*'}`
   }
 
-  private id = (permission: Permission): string => {
-    return permission.resource.type
-  }
-
-  private title = (permission: Permission): string => {
-    const org = permission.resource.org || '*'
-    const name = permission.resource.name || '*'
-    const type = permission.resource.type
-
-    if (permission.resource.name || permission.resource.org) {
-      return `${org}:${type}:${name}`
-    }
-
-    return `${permission.resource.type}:*`
+  private title = (permission: string): string => {
+    return `${permission}:*`
   }
 
   private handleDismiss = () => {
