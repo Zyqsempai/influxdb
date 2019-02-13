@@ -288,9 +288,6 @@ type Store interface {
 	// DeleteOrg deletes the org.
 	DeleteOrg(ctx context.Context, orgID platform.ID) error
 
-	// DeleteUser deletes a user with userID.
-	DeleteUser(ctx context.Context, userID platform.ID) error
-
 	// Close closes the store for usage and cleans up running processes.
 	Close() error
 }
